@@ -34,7 +34,6 @@ def validate_on_data(model: Model, data: Dataset,
                      batch_class: Batch = Batch,
                      compute_loss: bool = False,
                      beam_size: int = 1, beam_alpha: int = -1,
-                     active_layers: list = [],
                      batch_type: str = "sentence",
                      postprocess: bool = True,
                      bpe_type: str = "subword-nmt",
@@ -122,7 +121,7 @@ def validate_on_data(model: Model, data: Dataset,
             # run as during inference to produce translations
             output, attention_scores = run_batch(
                 model=model, batch=batch, beam_size=beam_size,
-                beam_alpha=beam_alpha, alpha_layers=alpha_layers, max_output_length=max_output_length,
+                beam_alpha=beam_alpha, max_output_length=max_output_length,
                 n_best=n_best)
 
             # sort outputs back to original order
@@ -251,7 +250,7 @@ def parse_test_args(cfg, mode="test"):
         if eval_metric == "bleu" else ""
 
     return batch_size, batch_type, use_cuda, device, n_gpu, level, \
-           eval_metric, max_output_length, beam_size, beam_alpha, active_layers \
+           eval_metric, max_output_length, beam_size, beam_alpha, \
            postprocess, bpe_type, sacrebleu, decoding_description, \
            tokenizer_info
 
@@ -301,7 +300,7 @@ def test(cfg_file,
 
     # parse test args
     batch_size, batch_type, use_cuda, device, n_gpu, level, eval_metric, \
-        max_output_length, beam_size, beam_alpha, active_layers, postprocess, \
+        max_output_length, beam_size, beam_alpha, postprocess, \
         bpe_type, sacrebleu, decoding_description, tokenizer_info \
         = parse_test_args(cfg, mode="test")
 
@@ -333,7 +332,7 @@ def test(cfg_file,
             batch_class=batch_class, batch_type=batch_type, level=level,
             max_output_length=max_output_length, eval_metric=eval_metric,
             use_cuda=use_cuda, compute_loss=False, beam_size=beam_size,
-            beam_alpha=beam_alpha, active_layers=active_layers, postprocess=postprocess,
+            beam_alpha=beam_alpha, postprocess=postprocess,
             bpe_type=bpe_type, sacrebleu=sacrebleu, n_gpu=n_gpu)
         #pylint: enable=unused-variable
 
@@ -417,7 +416,7 @@ def translate(cfg_file: str,
             batch_class=batch_class, batch_type=batch_type, level=level,
             max_output_length=max_output_length, eval_metric="",
             use_cuda=use_cuda, compute_loss=False, beam_size=beam_size,
-            beam_alpha=beam_alpha, active_layers=active_layers, postprocess=postprocess,
+            beam_alpha=beam_alpha, postprocess=postprocess,
             bpe_type=bpe_type, sacrebleu=sacrebleu, n_gpu=n_gpu, n_best=n_best)
         return hypotheses
 
@@ -452,7 +451,7 @@ def translate(cfg_file: str,
 
     # parse test args
     batch_size, batch_type, use_cuda, device, n_gpu, level, _, \
-        max_output_length, beam_size, beam_alpha, active_layers, postprocess, \
+        max_output_length, beam_size, beam_alpha, postprocess, \
         bpe_type, sacrebleu, _, _ = parse_test_args(cfg, mode="translate")
 
     # load model state from disk
