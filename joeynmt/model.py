@@ -244,7 +244,6 @@ def build_model(cfg: dict = None,
                "for transformer, emb_size must be hidden_size"
 
         encoder = TransformerEncoder(**cfg["encoder"],
-                                     active_layer,
                                      emb_size=src_embed.embedding_dim,
                                      emb_dropout=enc_emb_dropout)
     else:
