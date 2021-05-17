@@ -34,6 +34,7 @@ def validate_on_data(model: Model, data: Dataset,
                      batch_class: Batch = Batch,
                      compute_loss: bool = False,
                      beam_size: int = 1, beam_alpha: int = -1,
+                     active_layers: list = [],
                      batch_type: str = "sentence",
                      postprocess: bool = True,
                      bpe_type: str = "subword-nmt",
@@ -121,7 +122,7 @@ def validate_on_data(model: Model, data: Dataset,
             # run as during inference to produce translations
             output, attention_scores = run_batch(
                 model=model, batch=batch, beam_size=beam_size,
-                beam_alpha=beam_alpha, max_output_length=max_output_length,
+                beam_alpha=beam_alpha, alpha_layers=alpha_layers, max_output_length=max_output_length,
                 n_best=n_best)
 
             # sort outputs back to original order
