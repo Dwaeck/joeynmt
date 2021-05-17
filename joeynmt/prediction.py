@@ -250,7 +250,7 @@ def parse_test_args(cfg, mode="test"):
         if eval_metric == "bleu" else ""
 
     return batch_size, batch_type, use_cuda, device, n_gpu, level, \
-           eval_metric, max_output_length, beam_size, beam_alpha, \
+           eval_metric, max_output_length, beam_size, beam_alpha, active_layers \
            postprocess, bpe_type, sacrebleu, decoding_description, \
            tokenizer_info
 
@@ -300,7 +300,7 @@ def test(cfg_file,
 
     # parse test args
     batch_size, batch_type, use_cuda, device, n_gpu, level, eval_metric, \
-        max_output_length, beam_size, beam_alpha, postprocess, \
+        max_output_length, beam_size, beam_alpha, active_layers, postprocess, \
         bpe_type, sacrebleu, decoding_description, tokenizer_info \
         = parse_test_args(cfg, mode="test")
 
@@ -332,7 +332,7 @@ def test(cfg_file,
             batch_class=batch_class, batch_type=batch_type, level=level,
             max_output_length=max_output_length, eval_metric=eval_metric,
             use_cuda=use_cuda, compute_loss=False, beam_size=beam_size,
-            beam_alpha=beam_alpha, postprocess=postprocess,
+            beam_alpha=beam_alpha, active_layers=active_layers, postprocess=postprocess,
             bpe_type=bpe_type, sacrebleu=sacrebleu, n_gpu=n_gpu)
         #pylint: enable=unused-variable
 
@@ -416,7 +416,7 @@ def translate(cfg_file: str,
             batch_class=batch_class, batch_type=batch_type, level=level,
             max_output_length=max_output_length, eval_metric="",
             use_cuda=use_cuda, compute_loss=False, beam_size=beam_size,
-            beam_alpha=beam_alpha, postprocess=postprocess,
+            beam_alpha=beam_alpha, active_layers=active_layers, postprocess=postprocess,
             bpe_type=bpe_type, sacrebleu=sacrebleu, n_gpu=n_gpu, n_best=n_best)
         return hypotheses
 
