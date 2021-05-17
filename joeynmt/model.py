@@ -202,6 +202,7 @@ class _DataParallel(nn.DataParallel):
 
 
 def build_model(cfg: dict = None,
+                active_layer: List = [],
                 src_vocab: Vocabulary = None,
                 trg_vocab: Vocabulary = None) -> Model:
     """
@@ -243,6 +244,7 @@ def build_model(cfg: dict = None,
                "for transformer, emb_size must be hidden_size"
 
         encoder = TransformerEncoder(**cfg["encoder"],
+                                     active_layer,
                                      emb_size=src_embed.embedding_dim,
                                      emb_dropout=enc_emb_dropout)
     else:
