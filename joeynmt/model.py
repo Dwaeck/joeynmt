@@ -236,6 +236,7 @@ def build_model(cfg: dict = None,
 
     # build encoder
     enc_dropout = cfg["encoder"].get("dropout", 0.)
+    enc_layerdrop = cfg["encoder"].get("layerdrop", 0.)
     enc_emb_dropout = cfg["encoder"]["embeddings"].get("dropout", enc_dropout)
     if cfg["encoder"].get("type", "recurrent") == "transformer":
         assert cfg["encoder"]["embeddings"]["embedding_dim"] == \
@@ -244,6 +245,7 @@ def build_model(cfg: dict = None,
 
         encoder = TransformerEncoder(**cfg["encoder"],
                                      emb_size=src_embed.embedding_dim,
+                                     dropout=enc_layerdrop,
                                      emb_dropout=enc_emb_dropout)
     else:
         encoder = RecurrentEncoder(**cfg["encoder"],
