@@ -226,7 +226,7 @@ def parse_test_args(cfg, mode="test"):
     if "testing" in cfg.keys():
         beam_size = cfg["testing"].get("beam_size", 1)
         beam_alpha = cfg["testing"].get("alpha", -1)
-        active_layers = cfg["testing"].get("active_layers", 0)
+        active_layers = cfg["testing"].get("active_layers", [])
         postprocess = cfg["testing"].get("postprocess", True)
         bpe_type = cfg["testing"].get("bpe_type", "subword-nmt")
         sacrebleu = {"remove_whitespace": True, "tokenize": "13a"}
