@@ -159,8 +159,7 @@ class TransformerEncoder(Encoder):
                  ff_size: int = 2048,
                  num_layers: int = 8,
                  num_heads: int = 4,
-                 dropout: float = 0.1,
-                 layerdrop: float = 0,
+                 dropout: float = 0.1
                  active_layers: list = [],
                  emb_dropout: float = 0.1,
                  freeze: bool = False,
