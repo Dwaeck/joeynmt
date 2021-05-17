@@ -451,7 +451,7 @@ def translate(cfg_file: str,
 
     # parse test args
     batch_size, batch_type, use_cuda, device, n_gpu, level, _, \
-        max_output_length, beam_size, beam_alpha, postprocess, \
+        max_output_length, beam_size, beam_alpha, active_layers, postprocess, \
         bpe_type, sacrebleu, _, _ = parse_test_args(cfg, mode="translate")
 
     # load model state from disk
