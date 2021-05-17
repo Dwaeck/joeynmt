@@ -160,6 +160,8 @@ class TransformerEncoder(Encoder):
                  num_layers: int = 8,
                  num_heads: int = 4,
                  dropout: float = 0.1,
+                 layerdrop: float = 0,
+                 active_layers: list = [],
                  emb_dropout: float = 0.1,
                  freeze: bool = False,
                  **kwargs):
@@ -177,12 +179,18 @@ class TransformerEncoder(Encoder):
         """
         super().__init__()
 
-        # build all (num_layers) layers
-        self.layers = nn.ModuleList([
-            TransformerEncoderLayer(size=hidden_size, ff_size=ff_size,
-                                    num_heads=num_heads, dropout=dropout)
-            for _ in range(num_layers)])
-
+        # build all (num_layers) layers or only some
+        if active_layers != []:
+            self.layers = nn.ModuleList([
+                TransformerEncoderLayer(size=hidden_size, ff_size=ff_size,
+                                        num_heads=num_heads, dropout=dropout)
+                for _ in layerdrop])
+        else:
+            self.layers = nn.ModuleList([
+                TransformerEncoderLayer(size=hidden_size, ff_size=ff_size,
+                                        num_heads=num_heads, dropout=dropout)
+                for _ in range(num_layers)])
+            
         self.layer_norm = nn.LayerNorm(hidden_size, eps=1e-6)
         self.pe = PositionalEncoding(hidden_size)
         self.emb_dropout = nn.Dropout(p=emb_dropout)
