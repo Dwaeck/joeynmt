@@ -184,7 +184,7 @@ class TransformerEncoder(Encoder):
             self.layers = nn.ModuleList([
                 TransformerEncoderLayer(size=hidden_size, ff_size=ff_size,
                                         num_heads=num_heads, dropout=dropout)
-                for _ in layerdrop])
+                for x in active_layers])
         else:
             self.layers = nn.ModuleList([
                 TransformerEncoderLayer(size=hidden_size, ff_size=ff_size,
