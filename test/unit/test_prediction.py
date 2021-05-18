@@ -80,6 +80,7 @@ class TestPrediction(unittest.TestCase):
         self.parsed_cfg = parse_test_args(self.cfg, mode="translate")
 
         # build model
+        active_layers = cfg["testing"].get("active_layers", [])
         self.model = build_model(self.cfg["model"],
                                  src_vocab=src_vocab, trg_vocab=trg_vocab)
 
