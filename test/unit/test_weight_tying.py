@@ -45,7 +45,8 @@ class TestWeightTying(TensorTestCase):
 
         src_vocab = trg_vocab = self.vocab
 
-        model = build_model(cfg["model"],
+        active_layers = cfg["testing"].get("active_layers", [])
+        model = build_model(cfg["model"], active_layers,
                             src_vocab=src_vocab, trg_vocab=trg_vocab)
 
         self.assertEqual(src_vocab.itos, trg_vocab.itos)
@@ -66,7 +67,8 @@ class TestWeightTying(TensorTestCase):
 
         src_vocab = trg_vocab = self.vocab
 
-        model = build_model(cfg["model"],
+        active_layers = cfg["testing"].get("active_layers", [])
+        model = build_model(cfg["model"],active_layers,
                             src_vocab=src_vocab, trg_vocab=trg_vocab)
 
         self.assertEqual(model.trg_embed.lut.weight.shape,
@@ -88,7 +90,8 @@ class TestWeightTying(TensorTestCase):
         cfg["model"]["encoder"]["embeddings"]["embedding_dim"] = 64
 
         src_vocab = trg_vocab = self.vocab
-        model = build_model(cfg["model"],
+        active_layers = cfg["testing"].get("active_layers", [])
+        model = build_model(cfg["model"],active_layers,
                             src_vocab=src_vocab, trg_vocab=trg_vocab)
 
         src_weight = model.src_embed.lut.weight
