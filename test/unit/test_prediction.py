@@ -81,7 +81,7 @@ class TestPrediction(unittest.TestCase):
 
         # build model
         active_layers = cfg["testing"].get("active_layers", [])
-        self.model = build_model(self.cfg["model"],
+        self.model = build_model(self.cfg["model"], active_layers,
                                  src_vocab=src_vocab, trg_vocab=trg_vocab)
 
     def _translate(self, n_best):
